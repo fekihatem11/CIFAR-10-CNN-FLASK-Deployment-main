@@ -69,4 +69,3 @@ pip install -r requirements.txt
 
 3. Now you can run app.py. But if you want you can run .ipynb and you can build your own model. It is up to you. 
 
-projet
