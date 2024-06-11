@@ -1,5 +1,8 @@
 
 import tensorflow as tf
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import seaborn as sns
 class Cifar10Loading:
@@ -13,6 +16,18 @@ class Cifar10Loading:
         print('Shape of x_test is {}'.format(self.x_test.shape))
         print('Shape of y_train is {}'.format(self.y_train.shape))
         print('Shape of y_test is {}'.format(self.y_test.shape))
+
+    def setValidationData(self,split_size,random_state=0):
+        self.x_test, self.x_val, self.y_test, self.y_val = train_test_split(self.x_test, self.y_test, test_size = split_size, random_state = random_state)
+        print('Shape of x_train is {}'.format(self.x_train.shape))
+        print('Shape of x_test is {}'.format(self.x_test.shape))
+        print('Shape of x_val is {}'.format(self.x_val.shape))
+        print('Shape of y_train is {}'.format(self.y_train.shape))
+        print('Shape of y_test is {}'.format(self.y_test.shape))
+        print('Shape of y_val is {}'.format(self.y_val.shape))
+
+
+
 
 
 
@@ -62,11 +77,31 @@ class DataVisualization:
         plt.show()
 
 
-    class DataPreprocessing:
-        def __init__(self) -> None:
-            pass
+class DataPreprocessing:
+    def __init__(self) -> None:
+        self.augmentor=ImageDataGenerator(
+                            rotation_range=15,
+                            width_shift_range=0.1,
+                            height_shift_range=0.1,
+                            horizontal_flip=True,)
+
+    def normalize(self,x):
+        x = x.astype('float32')
+        x = x/255.0
+        return x
+    
+    def normalizeX_Data(self,data):
+        data.x_train = self.normalize(data.x_train)
+        data.x_test =  self.normalize(data.x_test)
+        data.x_val =   self.normalize(data.x_val)
+    
 
         
+    
+
+
+
+    
 
 
     
