@@ -1,5 +1,6 @@
 
 import tensorflow as tf
+import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import train_test_split
@@ -75,6 +76,23 @@ class DataVisualization:
 
         plt.tight_layout()
         plt.show()
+
+    def getMissingValues(self, data):
+        missing_train_images = np.isnan(data.x_train).any(axis=(1, 2, 3))
+        missing_test_images = np.isnan(data.x_test).any(axis=(1, 2, 3))
+
+        num_missing_train = np.sum(missing_train_images)
+        num_missing_test = np.sum(missing_test_images)
+
+        if num_missing_train > 0:
+            print(f"\nWarning: Found {num_missing_train} missing images in training data!")
+        else:
+            print("\nNo missing images found in training data.")
+
+        if num_missing_test > 0:
+            print(f"Warning: Found {num_missing_test} missing images in test data!")
+        else:
+            print("\nNo missing images found in test data.")
 
 
 class DataPreprocessing:
